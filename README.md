@@ -42,7 +42,7 @@ graph TD
     C -->|Calculates Consequences| C
     C -->|New State| D[reward.py <br> Grader]
     D -->|DevOpsObservation + Reward| B
-    B -->|Yield [STEP]| A
+    B -->|"Yield [STEP]"| A
 ```
 
 **1. `inference.py`**: The agent runtime evaluation loop, wired safely via `from openai import OpenAI`. Features a built-in Hugging Face HTTP health-check server.
