@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 from openai import OpenAI
 
 from devops_env.env import DevOpsEnv
@@ -30,7 +31,7 @@ You must respond in pure JSON matching this schema:
     
     try:
         response = client.chat.completions.create(
-            model=os.environ.get("MODEL_NAME", "gpt-4o-mini"),
+            model=os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct"),
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": obs_text}
@@ -53,8 +54,8 @@ You must respond in pure JSON matching this schema:
         return DevOpsAction(action_type="wait")
 
 def main():
-    api_base_url = os.environ.get("API_BASE_URL", "https://api.openai.com/v1")
-    model_name = os.environ.get("MODEL_NAME", "gpt-4o-mini")
+    api_base_url = os.environ.get("API_BASE_URL", "https://router.huggingface.co/hf-inference/v1/")
+    model_name = os.environ.get("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
     hf_token = os.environ.get("HF_TOKEN")
     
     if not hf_token:
@@ -97,20 +98,25 @@ def main():
                     done = True
                     info = {"current_score": 0.0}
                     
-                print(f"[STEP] step={step_num} action={action_json} reward={reward:.2f} done={done} error={error_msg}", flush=True)
+                print(f"[STEP] step={step_num} action={action_json} reward={reward:.2f} done={str(done).lower()} error={error_msg}", flush=True)
                 step_num += 1
                 
                 if done:
                     # Determine success based on score and output END marker
-                    success = info.get("current_score", 0.0) >= 1.0
+                    score = info.get("current_score", 0.0)
+                    success = score >= 1.0
                     rewards_str = ",".join(f"{r:.2f}" for r in rewards)
-                    print(f"[END] success={str(success).lower()} steps={step_num-1} rewards={rewards_str}", flush=True)
+                    print(f"[END] success={str(success).lower()} steps={step_num-1} score={score:.2f} rewards={rewards_str}", flush=True)
                     break
                     
         except Exception as e:
             print(f"Unexpected error in task {task_name}: {e}", file=sys.stderr)
         finally:
             env.close()
+
+    # Prevent Hugging Face Space from exiting
+    while True:
+        time.sleep(3600)
 
 if __name__ == "__main__":
     main()
