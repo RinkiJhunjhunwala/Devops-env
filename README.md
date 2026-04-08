@@ -1,3 +1,11 @@
+---
+title: DevOps Env
+emoji: 🚀
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
 # 🚀 DevOpsEnv: Autonomous SRE Incident Response
 
 **A deterministic Reinforcement Learning environment simulating a microservice cluster to train AI agents in diagnostic reasoning, dependency mapping, and SLA recovery.**
