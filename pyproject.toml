@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devops-env"
+version = "1.0.0"
+description = "A deterministic Reinforcement Learning environment simulating a microservice cluster to train AI agents in diagnostic reasoning, dependency mapping, and SLA recovery."
+dependencies = [
+    "pydantic",
+    "openai",
+    "openenv-core"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
