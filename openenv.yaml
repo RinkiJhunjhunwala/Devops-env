@@ -1,0 +1,18 @@
+version: 1.0
+name: devops-env
+description: "A DevOps/SRE environment simulating microservices for cascading failures and SLO recovery."
+image: devops-env:latest
+author: Meta/Hugging Face OpenEnv Hackathon Participant
+tags: ["devops", "sre", "kubernetes", "microservices"]
+action_space: "DevOpsAction JSON representing SRE actions"
+observation_space: "DevOpsObservation JSON representing cluster state and metrics"
+tasks:
+  ghost-in-the-pod:
+    difficulty: easy
+    description: "Fix a single failing microservice (payment-api) that throws 503s."
+  silent-budget-burn:
+    difficulty: medium
+    description: "Optimize an overworked recommendation-engine without dropping traffic."
+  the-cascade:
+    difficulty: hard
+    description: "Resolve a cascading failure started by a down auth-service. Note: Fixing an upstream root cause does not automatically heal downstream services. You must manually restart downstream pods to clear their degraded states after the root cause is fixed."
