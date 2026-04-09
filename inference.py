@@ -37,7 +37,8 @@ You must respond in pure JSON matching this schema:
                 {"role": "user", "content": obs_text}
             ],
             response_format={"type": "json_object"},
-            temperature=0.2
+            temperature=0.2,
+            timeout=15.0
         )
         raw_content = response.choices[0].message.content.strip()
         if raw_content.startswith("```json"):
