@@ -64,7 +64,7 @@ class DevOpsEnv:
         info["current_score"] = score
         
         # Env is done if reaching max steps or perfect score
-        if self.step_count >= self.max_steps or score >= 1.0:
+        if self.step_count >= self.max_steps or score >= 0.99:
             self._is_done = True
             
         return new_state, reward, self._is_done, info

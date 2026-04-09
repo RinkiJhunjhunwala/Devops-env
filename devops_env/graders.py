@@ -39,10 +39,13 @@ def grade_silent_budget_burn(cluster: SimulatedCluster) -> float:
     return min(1.0, score)
 
 def grade_task(task_name: str, cluster: SimulatedCluster) -> float:
+    score = 0.0
     if task_name == "ghost-in-the-pod":
-        return grade_ghost_in_the_pod(cluster)
+        score = grade_ghost_in_the_pod(cluster)
     elif task_name == "the-cascade":
-        return grade_the_cascade(cluster)
+        score = grade_the_cascade(cluster)
     elif task_name == "silent-budget-burn":
-        return grade_silent_budget_burn(cluster)
-    return 0.0
+        score = grade_silent_budget_burn(cluster)
+    
+    # Strictly between 0 and 1 (not 0.0 and not 1.0)
+    return float(max(0.01, min(0.99, round(score, 4))))

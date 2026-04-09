@@ -107,7 +107,7 @@ def main():
                     if done:
                         # Determine success based on score and output END marker
                         score = info.get("current_score", 0.0)
-                        success = score >= 1.0
+                        success = score >= 0.99
                         rewards_str = ",".join(f"{r:.2f}" for r in rewards)
                         print(f"[END] success={str(success).lower()} steps={step_num-1} score={score:.2f} rewards={rewards_str}", flush=True)
                         break
